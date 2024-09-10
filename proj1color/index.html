@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS 180 Fall 23 Project 1</title>
+    <title>CS 180 Fall 24 Project 1</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -53,56 +53,109 @@
 
         <h2>Approach</h2>
         <h3>Exhastive Search</h3>
-        <p>The simplest approach for smaller images was to perform an exhaustive search within a fixed radius of 20 pixels around the blue channel, which was used as the reference. I computed the normalized cross-correlation between the blue channel and the shifted green and red channels to find the best alignment.</p>
+        <p>The simplest approach for smaller images (jpgs) was to perform an exhaustive search within a fixed radius of 20 pixels around the blue channel, which was used as the reference. I used L2, which is to compute the euclidean norm between the blue channel and the shifted green and red channels to find the best alignment.</p>
 
         <h3>Pyramid Search</h3>
-        <p>For larger images, I used a pyramid search technique to speed up the alignment process. I first scaled down the images multiple times, performed alignment on the smaller versions, and used these shifts as a starting point for alignment at higher resolutions.</p>
+        <p>For larger images (tifs), I used a pyramid search technique to speed up the alignment process. I first scaled down the images multiple times, performed alignment on the smaller versions, and used these shifts as a starting point for alignment at higher resolutions.</p>
 
         <h2>Challenges and Problem Solving</h2>
         <p>In some cases, the alignment did not work perfectly due to distortions in the images or large displacements. I attempted to fine-tune the search radius and used the pyramid method to tackle these issues. However, images with significant rotation or perspective distortion would require more advanced techniques, such as affine transformations or rotation correction, which I have not implemented.</p>
-
-        <h2>Results on Reference Images</h2>
+        <h2>Results on Required Images</h2>
         <div class="reference-images">
             <p>The following images were processed using my alignment algorithm. The calculated offsets for the green (g) and red (r) channels relative to the blue (b) channel are listed below each image.</p>
 
-            <img src="media/church.jpg" alt="church.jpg">
-            <pre>church.jpg        g: (-1, 6) r: (5, 0)</pre>
-
-            <img src="media/tobolsk.jpg" alt="tobolsk.jpg">
-            <pre>tobolsk.jpg       g: (0, 1) r: (0, 5)</pre>
-
-            <img src="media/three_generations.jpg" alt="three_generations.jpg">
-            <pre>three_generations.jpg g: (-6, 15) r: (-7, 10)</pre>
-
-            <img src="media/melons.jpg" alt="melons.jpg">
-            <pre>melons.jpg        g: (17, 10) r: (51, 15)</pre>
-
             <img src="media/cathedral.jpg" alt="cathedral.jpg">
-            <pre>cathedral.jpg     g: (0, -3) r: (2, 0)</pre>
+            <pre>cathedral.jpg     g: (2, -2) r: (14, -2)</pre>
 
-            <img src="media/onion_church.jpg" alt="onion_church.jpg">
-            <pre>onion_church.jpg  g: (-11, 30) r: (-16, 41)</pre>
-
-            <img src="media/train.jpg" alt="train.jpg">
-            <pre>train.jpg         g: (-1, 14) r: (-2, 41)</pre>
+            <img src="media/church.jpg" alt="church.jpg">
+            <pre>church.jpg        g: (0, -12) r: (104, -12)</pre>
 
             <img src="media/emir.jpg" alt="emir.jpg">
-            <pre>emir.jpg          g: (1, 47) r: (12, 62)</pre>
+            <pre>emir.jpg          g: (-8, 16) r: (212, 36)</pre>
+
+            <img src="media/harvesters.jpg" alt="harvesters.jpg">
+            <pre>harvesters.jpg    g: (236, -8) r: (240, 16)</pre>
+
+            <img src="media/icon.jpg" alt="icon.jpg">
+            <pre>icon.jpg          g: (84, 32) r: (180, 44)</pre>
+
+            <img src="media/lady.jpg" alt="lady.jpg">
+            <pre>lady.jpg          g: (112, -12) r: (244, -32)</pre>
+
+            <img src="media/melons.jpg" alt="melons.jpg">
+            <pre>melons.jpg        g: (164, 8) r: (352, 16)</pre>
+
+            <img src="media/monastery.jpg" alt="monastery.jpg">
+            <pre>monastery.jpg     g: (-12, 0) r: (18, 2)</pre>
+
+            <img src="media/onion_church.jpg" alt="onion_church.jpg">
+            <pre>onion_church.jpg  g: (104, 44) r: (216, 0)</pre>
+
+            <img src="media/sculpture.jpg" alt="sculpture.jpg">
+            <pre>sculpture.jpg     g: (64, -20) r: (280, -52)</pre>
+
+            <img src="media/self_portrait.jpg" alt="self_portrait.jpg">
+            <pre>self_portrait.jpg g: (100, -4) r: (260, -8)</pre>
+
+            <img src="media/three_generations.jpg" alt="three_generations.jpg">
+            <pre>three_generations.jpg g: (104, 8) r: (216, 16)</pre>
+
+            <img src="media/tobolsk.jpg" alt="tobolsk.jpg">
+            <pre>tobolsk.jpg       g: (6, 4) r: (12, 6)</pre>
+
+            <img src="media/train.jpg" alt="train.jpg">
+            <pre>train.jpg         g: (220, -16) r: (216, 0)</pre>
         </div>
 
-        <h2>Results on Example Images</h2>
+        <h2>Results on Sample Images</h2>
         <div class="example-images">
             <p>Here are some additional examples processed using the same algorithm, with the corresponding offsets.</p>
 
-            <img src="media/master-pnp-prok-00100-00171u.jpg" alt="master-pnp-prok-00100-00171u.jpg">
-            <pre>master-pnp-prok-00100-00171u.jpg g: (-6, -5) r: (-12, 57)</pre>
+            <img src="media/sample_house.jpg" alt="sample_house.jpg">
+            <pre>sample_house.jpg  g: (8, 0) r: (18, 2)</pre>
 
-            <img src="media/master-pnp-prok-00200-00220u.jpg" alt="master-pnp-prok-00200-00220u.jpg">
-            <pre>master-pnp-prok-00200-00220u.jpg g: (-5, -10) r: (6, -4)</pre>
+            <img src="media/sample_flower.jpg" alt="sample_flower.jpg">
+            <pre>sample_flower.jpg g: (2, 2) r: (12, 2)</pre>
+
+
         </div>
 
+        <h2>Bells & Whistles</h2>
+        <div>
+            <p>
+                I implemented automatic cropping through edge detection. The first and last rows/columns where the variance exceeds the threshold are considered the start and end of the actual image content. The function detect_border_edges crops the image based on these detected edges.
+            </p>
+            <p>
+                After cropping, the cathedral, monastry, and sample flower images are visually better. I only applied it to jpgs to save time. 
+            </p>
+            <div class="example-images">
+                <p>Here are some additional examples processed using the same algorithm, with the corresponding offsets.</p>
+    
+                <img src="media/cathedral.jpg">
+                <pre>Cathedral before cropping</pre>
+    
+                <img src="media/cathedral_cropped.jpg">
+                <pre>Cathedral after cropping</pre>
+
+                <img src="media/monastery.jpg">
+                <pre>Monastery before cropping</pre>
+    
+                <img src="media/monastery_cropped.jpg">
+                <pre>Monastery after cropping</pre>4
+
+                <img src="media/sample_flower.jpg">
+                <pre>Sample flowers before cropping</pre>
+    
+                <img src="media/sample_flower_cropped.jpg">
+                <pre>Sample flowers after cropping</pre>
+    
+    
+            </div>
+        </div>
+
+
         <h2>Shortcomings</h2>
-        <p>Some images did not align perfectly, especially those with large displacements or distortions. The current implementation does not handle rotation or perspective corrections, which are necessary for aligning certain images more accurately. These issues would require more advanced image transformation techniques, which were outside the scope of this project.</p>
+        <p>Some images did not align perfectly, especially those with complicated details. The current implementation also does not handle perspective corrections or missing colors, which are necessary for aligning certain images more accurately. These issues would require more advanced image transformation techniques, which were outside the scope of this project.</p>
     </div>
 
 </body>
