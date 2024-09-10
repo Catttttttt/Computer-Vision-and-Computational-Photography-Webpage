@@ -1,0 +1,108 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 180 Fall 23 Project 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .reference-images, .example-images {
+            margin-top: 20px;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        img {
+            display: block;
+            margin: 10px 0;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Images of the Russian Empire: Colorizing the Prokudin-Gorskii Photo Collection</h1>
+        <p>Author: Shujing Hu</p>
+
+        <h2>Project Overview</h2>
+        <p>This project involves reconstructing color images from the digitized Prokudin-Gorskii glass plate negatives. These negatives contain three exposures taken with red, green, and blue filters, and the goal was to align these exposures to create color images.</p>
+
+        <h2>Approach</h2>
+        <h3>Exhastive Search</h3>
+        <p>The simplest approach for smaller images was to perform an exhaustive search within a fixed radius of 20 pixels around the blue channel, which was used as the reference. I computed the normalized cross-correlation between the blue channel and the shifted green and red channels to find the best alignment.</p>
+
+        <h3>Pyramid Search</h3>
+        <p>For larger images, I used a pyramid search technique to speed up the alignment process. I first scaled down the images multiple times, performed alignment on the smaller versions, and used these shifts as a starting point for alignment at higher resolutions.</p>
+
+        <h2>Challenges and Problem Solving</h2>
+        <p>In some cases, the alignment did not work perfectly due to distortions in the images or large displacements. I attempted to fine-tune the search radius and used the pyramid method to tackle these issues. However, images with significant rotation or perspective distortion would require more advanced techniques, such as affine transformations or rotation correction, which I have not implemented.</p>
+
+        <h2>Results on Reference Images</h2>
+        <div class="reference-images">
+            <p>The following images were processed using my alignment algorithm. The calculated offsets for the green (g) and red (r) channels relative to the blue (b) channel are listed below each image.</p>
+
+            <img src="media/church.jpg" alt="church.jpg">
+            <pre>church.jpg        g: (-1, 6) r: (5, 0)</pre>
+
+            <img src="media/tobolsk.jpg" alt="tobolsk.jpg">
+            <pre>tobolsk.jpg       g: (0, 1) r: (0, 5)</pre>
+
+            <img src="media/three_generations.jpg" alt="three_generations.jpg">
+            <pre>three_generations.jpg g: (-6, 15) r: (-7, 10)</pre>
+
+            <img src="media/melons.jpg" alt="melons.jpg">
+            <pre>melons.jpg        g: (17, 10) r: (51, 15)</pre>
+
+            <img src="media/cathedral.jpg" alt="cathedral.jpg">
+            <pre>cathedral.jpg     g: (0, -3) r: (2, 0)</pre>
+
+            <img src="media/onion_church.jpg" alt="onion_church.jpg">
+            <pre>onion_church.jpg  g: (-11, 30) r: (-16, 41)</pre>
+
+            <img src="media/train.jpg" alt="train.jpg">
+            <pre>train.jpg         g: (-1, 14) r: (-2, 41)</pre>
+
+            <img src="media/emir.jpg" alt="emir.jpg">
+            <pre>emir.jpg          g: (1, 47) r: (12, 62)</pre>
+        </div>
+
+        <h2>Results on Example Images</h2>
+        <div class="example-images">
+            <p>Here are some additional examples processed using the same algorithm, with the corresponding offsets.</p>
+
+            <img src="media/master-pnp-prok-00100-00171u.jpg" alt="master-pnp-prok-00100-00171u.jpg">
+            <pre>master-pnp-prok-00100-00171u.jpg g: (-6, -5) r: (-12, 57)</pre>
+
+            <img src="media/master-pnp-prok-00200-00220u.jpg" alt="master-pnp-prok-00200-00220u.jpg">
+            <pre>master-pnp-prok-00200-00220u.jpg g: (-5, -10) r: (6, -4)</pre>
+        </div>
+
+        <h2>Shortcomings</h2>
+        <p>Some images did not align perfectly, especially those with large displacements or distortions. The current implementation does not handle rotation or perspective corrections, which are necessary for aligning certain images more accurately. These issues would require more advanced image transformation techniques, which were outside the scope of this project.</p>
+    </div>
+
+</body>
