@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 180/280A Project 3: Face Morphing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        img {
+            display: block;
+            margin: 10px 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Face Morphing </h1>
+        <p>Author: Shujing Hu</p>
+
+        <h2>Project Overview</h2>
+        <p>This project focuses on generating a morph animation between two faces, computing the mean face of a population, and creating caricatures.</p>
+
+        <h2>Part 1: Defining Correspondences</h2>
+        <p>To create a smooth morph, I labeled corresponding keypoints between two faces (my face and the target image) using the correspondence web tool provided. Key points were labeled consistently for features like the eyes, mouth, and chin. I then used Delaunay triangulation on the average keypoints to generate triangles for warping.</p>
+
+        <div class="example-images">
+            <img src="media/1.1.png">
+            <pre>Keypoints (Triangulation shown below in part 2) </pre>
+        </div>
+
+        <h2>Part 2: Computing the Mid-Way Face</h2>
+        <p>I computed the average shape from the two sets of points and warped both faces to this mid-way shape. The color of the two faces was averaged to generate a mid-way face.</p>
+        <div class="example-images">
+            <img src="media/2.1.png">
+            <pre>Midway Face of Image A and Image B</pre>
+        </div>
+
+        <h2>Part 3: Morph Sequence</h2>
+        <p>For the morphing sequence, I generated 10 frames, warping the shapes of the images step by step and cross-dissolving the colors to create the morph animation.</p>
+        <div class="example-images">
+            <img src="media/3.1.png"">
+            <pre>Morph Sequence</pre>
+            <img src="media/morph_sequence.gif">
+            <pre>Morph Animation</pre>
+        </div>
+
+        <h2>Part 4: The Mean Face of a Population</h2>
+        <p>For the Danes dataset, I selected the subset of males with smiling faces. I used their keypoints from parsing asf files to compute the average face shape of the population. Then, I morphed each individual face to this average geometry and take the mean for morphed images.</p>
+        <div class="example-images">
+            <img src="media/4.1.png" >
+            <pre>Mean Face of the Population</pre>
+        </div>
+
+        <h2>Part 5: Caricatures</h2>
+        <p>I first cropped the mean face I got from part 4 to the same ratio of my self portrait, and then I resize my self portrait image so that they have the exact same shape. By extrapolating from the population mean, I created a caricature of my face, which is a little twisted.</p>
+        <div class="example-images">
+            <img src="media/5.1.png" >
+            <pre>Resized images and correspondent keypoints</pre>
+            <img src="media/5.2.png">
+            <pre>My caricature (kinda funny)</pre>
+        </div>
+
+        <h2>Part 6: Bells and Whistles - Change smile of my face</h2>
+        <p>I changed the subset to female 6, which is the female joker faces. Then, I cropped the mean face I got from this subset to the same ratio of my self portrait, and I use the resized self portrait image so that they have the exact same shape. By extrapolating from the population mean, I changed my smiling face to a joker face that I could never do in real life.</p>
+        <div class="example-images">
+            <img src="media/6.1.png" >
+            <pre>Population mean for female joker face</pre>
+            <img src="media/6.2.png">
+            <pre>Correspondent keypoints </pre>
+            <img src="media/6.3.png">
+            <pre>My caricature joker face (looks really funny)</pre>
+        </div>
+
+        <h2>Challenges and Lessons Learned</h2>
+        <p>One challenge was ensuring that the correspondence between the two sets of points was consistent and that the triangulation worked well for warping. The affine transformation for each triangle was crucial in achieving smooth transitions.</p>
+
+        <h2>Conclusion</h2>
+        <p>This project helped me explore facial morphing techniques and the mathematical foundations. I was able to create smooth morphing animations and experiment with population-level face analysis.</p>
+    </div>
+
+</body>
+
+</html>
