@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 180/280A Project 4A: Image Warping and Mosaicing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        img {
+            display: block;
+            margin: 10px 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Image Warping and Mosaicing</h1>
+        <p>Author: Shujing Hu</p>
+
+        <h2>Project Overview</h2>
+        <p>This project is focused on image warping and mosaicing, the first part of a larger project. The goal is to register, warp, and blend multiple images into a seamless mosaic by computing homographies and applying them to warp images.</p>
+
+        <h2>Part 1: Shoot and Digitize Pictures</h2>
+        <p>To start, I took several overlapping photos of a scene with projective transforms (rotating the camera without changing the point of view). This step ensures that the images can be aligned through homography transformations.</p>
+        <div class="example-images">
+            <img src="media/f1.jpg">
+            <pre>Sample flower 1</pre>
+            <img src="media/f2.jpg">
+            <pre>Sample flower 2</pre>
+            <img src="media/b1.jpg">
+            <pre>Sample bedroom 1</pre>
+            <img src="media/b2.jpg">
+            <pre>Sample bedroom 2</pre>
+            <img src="media/k1.png">
+            <pre>Sample kitchen 1</pre>
+            <img src="media/k2.png">
+            <pre>Sample kitchen 2</pre>
+
+        </div>
+
+        <h2>Part 2: Recover Homographies</h2>
+        <p>I computed the homographies between each pair of images using corresponding points. I wrote a function <code>computeH</code> to calculate the 3x3 homography matrix from pairs of corresponding points in the images. I only put screenshot of the output for the kitchen pictures, and the rest could be found running main.ipynb.</p>
+        <div class="example-images">
+            <img src="media/kp.png">
+            <pre>Corresponding points between two kitchen images (used for homography calculation)</pre>
+        </div>
+
+        <h2>Part 3: Warp the Images</h2>
+        <p>Using the computed homography, I warped the images to align them with the reference image. I used inverse warping to ensure proper interpolation and resampling, with special attention to the resulting image size and boundary conditions.</p>
+        <div class="example-images">
+            <img src="media/fw.png">
+            <pre>Warped flower image after applying the homography</pre>
+            <img src="media/kw.png">
+            <pre>Warped kitchen image after applying the homography</pre>
+        </div>
+
+        <h2>Part 4: Blending Images into a Mosaic</h2>
+        <p>After warping the images, I used blending techniques to create a seamless mosaic. Instead of hard edge boundaries, I applied a weighted average and used Laplacian pyramid blending to minimize artifacts by changing the code from project 2.</p>
+        <div class="example-images">
+            <img src="media/ff.png">
+            <pre>Final mosaic flower image</pre>
+            <img src="media/bb.png">
+            <pre>Final mosaic bedroom image</pre>
+            <img src="media/kk.png">
+            <pre>Final mosaic kitchen image</pre>
+        </div>
+
+
+        <h2>Part 3.5: Image Rectification</h2>
+        <p>For testing, I performed image rectification for the kitchen image, where I warped the surface of the microwave to a square. This ensures that the homographies and warping functions work correctly.</p>
+        <div class="example-images">
+            <img src="media/r1.png">
+            <pre>Rectified 0kitchen image</pre>
+        </div>
+
+        
+
+        <h2>Challenges and Lessons Learned</h2>
+        <p>One challenge was to determine the final canvas size and how to stack the images together. I used a scratch paper to carry the math out with concrete sample numebrs. I learned the importance of homography and matrix algebra.</p>
+
+        <h2>Conclusion</h2>
+        <p>This project taught me valuable insights into homography computation, image warping, and blending techniques. The mosaicing process allowed me to apply theoretical concepts to real-world images, creating a visually coherent result.</p>
+    </div>
+
+</body>
+
+</html>
